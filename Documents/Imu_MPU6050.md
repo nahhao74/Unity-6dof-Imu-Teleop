@@ -1,21 +1,17 @@
 # MPU-6050 6-DOF IMU Data Acquisition & Teleoperation Pipeline
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Platform: ESP32 / STM32 / Arduino](https://img.shields.io/badge/Platform-ESP32%20%7C%20STM32%20%7C%20Arduino-blue)](#)
-[![Communication: I2C & Serial/UDP](https://img.shields.io/badge/Comm-I2C%20%7C%20Serial%20%7C%20UDP-green)](#)
-
-## 📌 Overview
+## Overview
 This repository provides a robust, high-frequency data acquisition pipeline for the **MPU-6050 6-DOF IMU** (Inertial Measurement Unit). It is specifically designed to read, process, and transmit spatial orientation data (Quaternions and Euler angles) for robotic kinematics, digital twin simulations (e.g., Unity 3D), and autonomous navigation systems.
 
 By leveraging the MPU-6050's onboard **Digital Motion Processor (DMP)**, this implementation offloads complex sensor fusion calculations from the main microcontroller, ensuring high-speed and drift-minimized orientation tracking.
 
-## ✨ Key Features
+## Key Features
 * **Hardware-Level Sensor Fusion:** Utilizes the MPU-6050's DMP to calculate 6-axis data internally, significantly reducing the microcontroller's computational load.
 * **Gimbal-Lock Free Orientation:** Outputs data in **Quaternions** (`w, x, y, z`), making it directly compatible with 3D engines like Unity and ROS 2 TF trees without the risk of Gimbal Lock.
 * **Automated Calibration:** Includes a zero-drift calibration routine on startup to eliminate static offset errors in gyroscope and accelerometer readings.
 * **High-Speed Data Pipeline:** Configured for fast I2C communication (400kHz) and optimized serial/network transmission (UDP/Serial) for real-time teleoperation.
 
-## 🛠️ Hardware Architecture & Wiring
+## Hardware Architecture & Wiring
 
 The system uses standard I2C communication. Ensure your microcontroller's logic level matches the MPU-6050 module (typically 3.3V, though many breakout boards include voltage regulators).
 
@@ -29,7 +25,7 @@ The system uses standard I2C communication. Ensure your microcontroller's logic 
 
 > **Note on Interrupts:** The `INT` pin is crucial for DMP operation. It signals the microcontroller exactly when a new packet of processed orientation data is ready, preventing redundant polling and ensuring timing accuracy.
 
-## ⚙️ Software Dependencies
+## Software Dependencies
 
 This project relies on the widely adopted I2Cdev library ecosystem for robust I2C communication and DMP configuration.
 
@@ -37,7 +33,7 @@ This project relies on the widely adopted I2Cdev library ecosystem for robust I2
 * `MPU6050_6Axis_MotionApps20.h` (Included in the I2Cdev repo)
 * Standard `Wire.h` (Built into the Arduino/ESP core)
 
-## 🚀 Data Pipeline & Integration (Unity / ROS 2)
+## Data Pipeline & Integration (Unity / ROS 2)
 
 This module is designed to act as the front-end data publisher for downstream kinematic controllers.
 
